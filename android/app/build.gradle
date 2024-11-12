@@ -1,0 +1,66 @@
+plugins {
+    id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+apply plugin: 'com.android.application'
+// Tambahkan baris di bawah ini untuk menerapkan plugin Google Services.
+apply plugin: 'com.google.gms.google-services' // Google Services plugin
+
+android {
+    namespace = "com.example.flutter_application_prak"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId = "com.example.flutter_application_prak"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+        minSdkVersion 23
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    // Gson library for JSON parsing
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+    // Guava: Google's core libraries for Java
+    implementation 'com.google.guava:guava:30.1.1-jre'
+
+    // JSR 305 annotations
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // Kotlin standard library
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31'
+}

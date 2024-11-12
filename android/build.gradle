@@ -1,0 +1,33 @@
+buildscript {
+repositories {
+// Periksa apakah sudah menyertakan Maven Google atau tidak.
+google()
+mavenCentral() // Google's Maven repository
+}
+dependencies {
+// ...
+// Tambahkan baris di bawah ini untuk menyertakan plugin Google
+classpath 'com.android.tools.build:gradle:8.0.0'
+classpath 'com.google.gms:google-services:4.3.13' // Google Service
+}
+}
+
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
