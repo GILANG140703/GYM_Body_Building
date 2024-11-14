@@ -1,14 +1,18 @@
 import 'package:get/get.dart';
-import '../modules/login/bindings/login_binding.dart';
-import '../modules/login/views/login_view.dart';
-// import '../modules/home/bindings/home_binding.dart';
-// import '../modules/home/views/home_view.dart';
+
 import '../modules/latihan/bindings/latihan_binding.dart';
 import '../modules/latihan/views/latihan_view.dart';
-// import '../modules/meals_detail/views/meals_detail_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
 import '../modules/meals/views/meals_view.dart';
 import '../modules/profil/bindings/profil_binding.dart';
 import '../modules/profil/views/profil_view.dart';
+import '../modules/progress/bindings/progress_binding.dart';
+import '../modules/progress/views/progress_view.dart';
+
+// import '../modules/home/bindings/home_binding.dart';
+// import '../modules/home/views/home_view.dart';
+// import '../modules/meals_detail/views/meals_detail_view.dart';
 
 part 'app_routes.dart';
 
@@ -46,5 +50,10 @@ class AppPages {
     //   page: () => const HomeView(),
     //   binding: HomeBinding(),
     // ),
+    GetPage(
+      name: _Paths.PROGRESS,
+      page: () => ProgressView(),
+      binding: ProgressBinding(),
+    ),
   ];
 }
