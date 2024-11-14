@@ -43,7 +43,6 @@ class _ProfileViewState extends State<ProfilView> {
 
   Future<void> _fetchUserProfile() async {
     try {
-      // Mendapatkan data pengguna berdasarkan email
       DocumentSnapshot snapshot =
           await firestore.collection('users').doc(user!.email).get();
 
@@ -62,7 +61,6 @@ class _ProfileViewState extends State<ProfilView> {
 
   Future<void> _fetchToDoList() async {
     try {
-      // Mendapatkan daftar To-Do sesuai email pengguna yang sedang login
       QuerySnapshot snapshot = await firestore
           .collection('To-Do List')
           .where('userEmail', isEqualTo: user!.email)
@@ -132,8 +130,14 @@ class _ProfileViewState extends State<ProfilView> {
         'currentWeight': _currentWeight,
         'targetWeight': _targetWeight,
         'height': _height,
-      }, SetOptions(merge: true)); // Merge to avoid overwriting other fields
+      }, SetOptions(merge: true));
     }
+  }
+
+  void _deleteProfileImage() {
+    setState(() {
+      _profileImage = null;
+    });
   }
 
   void _showGenderSelectionDialog() {
@@ -208,13 +212,12 @@ class _ProfileViewState extends State<ProfilView> {
   }
 
   void _toggleToDoCompletion(int index, bool? value) async {
-    // Update Firestore document to toggle completion status
     await firestore
         .collection('To-Do List')
         .doc(_toDoList[index]['id'])
         .update({'completed': value});
     setState(() {
-      _toDoList[index]['completed'] = value; // Update local state
+      _toDoList[index]['completed'] = value;
     });
   }
 
@@ -240,7 +243,6 @@ class _ProfileViewState extends State<ProfilView> {
             TextButton(
               onPressed: () async {
                 if (toDoController.text.isNotEmpty) {
-                  // Menambahkan tugas baru ke dalam Firestore
                   DocumentReference newDoc =
                       await firestore.collection('To-Do List').add({
                     'text': toDoController.text,
@@ -248,7 +250,7 @@ class _ProfileViewState extends State<ProfilView> {
                   });
                   setState(() {
                     _toDoList.add({
-                      'id': newDoc.id, // Save the document ID
+                      'id': newDoc.id,
                       'text': toDoController.text,
                       'completed': false,
                     });
@@ -265,7 +267,6 @@ class _ProfileViewState extends State<ProfilView> {
   }
 
   void _deleteToDoAt(int index) async {
-    // Delete Firestore document
     await firestore
         .collection('To-Do List')
         .doc(_toDoList[index]['id'])
@@ -300,13 +301,11 @@ class _ProfileViewState extends State<ProfilView> {
               onPressed: () async {
                 String newText = editController.text;
                 if (newText.isNotEmpty) {
-                  // Update Firebase dengan teks yang diedit
                   await firestore
                       .collection('To-Do List')
                       .doc(_toDoList[index]['id'])
                       .update({'text': newText});
 
-                  // Perbarui state lokal
                   setState(() {
                     _toDoList[index]['text'] = newText;
                   });
@@ -331,9 +330,8 @@ class _ProfileViewState extends State<ProfilView> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () async {
-              await ProfilController().logout(); // Call the logout function
-              Navigator.pushReplacementNamed(
-                  context, '/login'); // Navigate to login view
+              await ProfilController().logout();
+              Navigator.pushReplacementNamed(context, '/login');
             },
           ),
         ],
@@ -341,7 +339,6 @@ class _ProfileViewState extends State<ProfilView> {
       body: user == null
           ? Center(child: Text("User not authenticated"))
           : SingleChildScrollView(
-              // Tambahkan SingleChildScrollView di sini
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -381,64 +378,58 @@ class _ProfileViewState extends State<ProfilView> {
                             onPressed: _openImagePicker,
                             child: const Text('Ubah Foto Profil'),
                           ),
+                          if (_profileImage != null)
+                            TextButton(
+                              onPressed: _deleteProfileImage,
+                              child: const Text(
+                                'Hapus Foto Profil',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Info Dasar',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ListTile(
+                      title: const Text('Jenis Kelamin'),
+                      subtitle: Text(_gender),
+                      trailing: const Icon(Icons.edit),
+                      onTap: _showGenderSelectionDialog,
                     ),
-                    const Divider(),
-                    Card(
-                      color: Colors.blue[50],
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: const Text('Jenis Kelamin'),
-                            trailing: Text(_gender),
-                            onTap: _showGenderSelectionDialog,
-                          ),
-                          ListTile(
-                            title: const Text('Berat Badan Sekarang (kg)'),
-                            trailing: Text(_currentWeight.toString()),
-                            onTap: () {
-                              _showInputDialog('Berat Badan Sekarang',
-                                  _currentWeight.toString(), (value) {
-                                setState(() {
-                                  _currentWeight =
-                                      double.tryParse(value) ?? 0.0;
-                                });
-                              });
-                            },
-                          ),
-                          ListTile(
-                            title: const Text('Target Berat Badan (kg)'),
-                            trailing: Text(_targetWeight.toString()),
-                            onTap: () {
-                              _showInputDialog('Target Berat Badan',
-                                  _targetWeight.toString(), (value) {
-                                setState(() {
-                                  _targetWeight = double.tryParse(value) ?? 0.0;
-                                });
-                              });
-                            },
-                          ),
-                          ListTile(
-                            title: const Text('Tinggi Badan (cm)'),
-                            trailing: Text(_height.toString()),
-                            onTap: () {
-                              _showInputDialog(
-                                  'Tinggi Badan', _height.toString(), (value) {
-                                setState(() {
-                                  _height = double.tryParse(value) ?? 0.0;
-                                });
-                              });
-                            },
-                          ),
-                        ],
-                      ),
+                    ListTile(
+                      title: const Text('Berat Badan Saat Ini'),
+                      subtitle: Text('$_currentWeight kg'),
+                      trailing: const Icon(Icons.edit),
+                      onTap: () => _showInputDialog(
+                          'Berat Badan Saat Ini', _currentWeight.toString(),
+                          (newValue) {
+                        setState(() {
+                          _currentWeight = double.tryParse(newValue) ?? 0.0;
+                        });
+                      }),
+                    ),
+                    ListTile(
+                      title: const Text('Berat Badan Target'),
+                      subtitle: Text('$_targetWeight kg'),
+                      trailing: const Icon(Icons.edit),
+                      onTap: () => _showInputDialog(
+                          'Berat Badan Target', _targetWeight.toString(),
+                          (newValue) {
+                        setState(() {
+                          _targetWeight = double.tryParse(newValue) ?? 0.0;
+                        });
+                      }),
+                    ),
+                    ListTile(
+                      title: const Text('Tinggi Badan'),
+                      subtitle: Text('$_height cm'),
+                      trailing: const Icon(Icons.edit),
+                      onTap: () => _showInputDialog(
+                          'Tinggi Badan', _height.toString(), (newValue) {
+                        setState(() {
+                          _height = double.tryParse(newValue) ?? 0.0;
+                        });
+                      }),
                     ),
                     const SizedBox(height: 20),
                     const Text(
@@ -446,48 +437,46 @@ class _ProfileViewState extends State<ProfilView> {
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    const Divider(),
+                    const SizedBox(height: 10),
                     ListView.builder(
-                      shrinkWrap: true, // Aktifkan shrinkWrap di sini
-                      physics:
-                          const NeverScrollableScrollPhysics(), // Nonaktifkan scroll di sini
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: _toDoList.length,
                       itemBuilder: (context, index) {
-                        final toDoItem = _toDoList[index];
                         return ListTile(
+                          title: Text(_toDoList[index]['text']),
                           leading: Checkbox(
-                            value: toDoItem['completed'],
-                            onChanged: (bool? value) {
+                            value: _toDoList[index]['completed'],
+                            onChanged: (value) {
                               _toggleToDoCompletion(index, value);
                             },
-                          ),
-                          title: Text(
-                            toDoItem['text'],
-                            style: TextStyle(
-                              decoration: toDoItem['completed']
-                                  ? TextDecoration.lineThrough
-                                  : TextDecoration.none,
-                            ),
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.edit),
-                                onPressed: () => _editToDoAt(index),
+                                onPressed: () {
+                                  _editToDoAt(index);
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(Icons.delete),
-                                onPressed: () => _deleteToDoAt(index),
+                                onPressed: () {
+                                  _deleteToDoAt(index);
+                                },
                               ),
                             ],
                           ),
                         );
                       },
                     ),
-                    ElevatedButton(
-                      onPressed: _addToDo,
-                      child: const Text('Tambah To-Do'),
+                    const SizedBox(height: 10),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: _addToDo,
+                        child: const Text('Tambah To-Do'),
+                      ),
                     ),
                   ],
                 ),

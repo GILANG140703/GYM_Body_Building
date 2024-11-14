@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_prak/app/modules/progress/views/progress_view.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -18,6 +19,7 @@ class NavbarController extends GetxController {
       // Routes.LATIHAN;
       const LatihanView(),
       MealsView(), // i
+      ProgressView(),
       ProfilView(),
     ];
   }
@@ -33,6 +35,12 @@ class NavbarController extends GetxController {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.restaurant), // Pastikan ini sesuai
         title: "Meals",
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.assessment),
+        title: "Progress", // Add title for Progress view
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
