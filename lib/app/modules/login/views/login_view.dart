@@ -12,6 +12,8 @@ const users = {};
 
 class LoginView extends StatelessWidget {
   AuthController auth = Get.put(AuthController());
+
+  LoginView({super.key});
   Duration get loginTime => const Duration(milliseconds: 1000);
 
   Future<String?> _authUser(LoginData data) {

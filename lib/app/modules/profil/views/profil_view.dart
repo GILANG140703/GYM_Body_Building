@@ -9,7 +9,8 @@ import 'package:image_picker/image_picker.dart';
 class ProfilView extends StatefulWidget {
   final String documentId;
 
-  ProfilView({
+  const ProfilView({
+    super.key,
     this.documentId = '',
   });
 

@@ -3,7 +3,6 @@ import 'package:flutter_application_prak/app/modules/progress/views/progress_vie
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
-import '../../../routes/app_pages.dart';
 import '../../latihan/views/latihan_view.dart';
 
 import '../../meals/views/meals_view.dart';

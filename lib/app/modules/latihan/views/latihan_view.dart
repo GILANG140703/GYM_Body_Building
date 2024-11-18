@@ -4,7 +4,7 @@ import '../controllers/latihan_controller.dart';
 // import 'latihan_controller.dart';
 
 class LatihanView extends GetView<LatihanController> {
-  const LatihanView({Key? key}) : super(key: key);
+  const LatihanView({super.key});
 
   @override
   Widget build(BuildContext context) {
