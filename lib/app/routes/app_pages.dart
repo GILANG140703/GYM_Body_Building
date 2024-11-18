@@ -5,6 +5,8 @@ import '../modules/latihan/views/latihan_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/meals/views/meals_view.dart';
+import '../modules/podcast/bindings/podcast_binding.dart';
+import '../modules/podcast/views/podcast_view.dart';
 import '../modules/profil/bindings/profil_binding.dart';
 import '../modules/profil/views/profil_view.dart';
 import '../modules/progress/bindings/progress_binding.dart';
@@ -54,6 +56,11 @@ class AppPages {
       name: _Paths.PROGRESS,
       page: () => ProgressView(),
       binding: ProgressBinding(),
+    ),
+    GetPage(
+      name: _Paths.PODCAST,
+      page: () => PodcastView(),
+      binding: PodcastBinding(),
     ),
   ];
 }
