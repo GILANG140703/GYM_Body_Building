@@ -51,6 +51,10 @@ dependencies:
   audioplayers: ^6.1.0
   speech_to_text: ^7.0.0
   permission_handler: ^11.3.1
+  geolocator: ^11.1.0
+  geocoding: ^3.0.0
+  google_maps_flutter: ^2.6.1
+  url_launcher: ^6.1.5
  
 
 dev_dependencies:

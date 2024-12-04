@@ -11,35 +11,43 @@ class ProgressView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Progress'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue[800],
       ),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton.icon(
-              icon: Icon(Icons.photo),
-              label: Text('Foto'),
-              onPressed: () {
-                Get.to(() => PhotoPage());
-              },
-            ),
-            SizedBox(width: 20),
-            ElevatedButton.icon(
-              icon: Icon(Icons.videocam),
-              label: Text('Video'),
-              onPressed: () {
-                Get.to(() => VideoPage());
-              },
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade200, Colors.blue.shade800],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton.icon(
+                icon: Icon(Icons.photo),
+                label: Text('Foto'),
+                onPressed: () {
+                  Get.to(() => PhotoPage());
+                },
+              ),
+              SizedBox(width: 20),
+              ElevatedButton.icon(
+                icon: Icon(Icons.videocam),
+                label: Text('Video'),
+                onPressed: () {
+                  Get.to(() => VideoPage());
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-// PhotoPage: Displays and manages photos
 class PhotoPage extends StatefulWidget {
   @override
   _PhotoPageState createState() => _PhotoPageState();
@@ -144,58 +152,60 @@ class _PhotoPageState extends State<PhotoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Foto'),
-        backgroundColor: Colors.blue,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        backgroundColor: Colors.blue[800],
       ),
-      body: photos.isEmpty
-          ? Center(child: Text("Tidak ada foto"))
-          : Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: photos.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          leading: GestureDetector(
-                            onTap: () => _viewPhoto(photos[index]["path"]!),
-                            child: Image.file(File(photos[index]["path"]!),
-                                width: 50, height: 50),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade200, Colors.blue.shade800],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: photos.isEmpty
+            ? Center(child: Text("Tidak ada foto"))
+            : Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: photos.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: ListTile(
+                            leading: GestureDetector(
+                              onTap: () => _viewPhoto(photos[index]["path"]!),
+                              child: Image.file(File(photos[index]["path"]!),
+                                  width: 50, height: 50),
+                            ),
+                            title: Text(photos[index]["name"]!),
+                            trailing: PopupMenuButton<String>(
+                              onSelected: (String choice) {
+                                if (choice == 'Rename') {
+                                  _renamePhoto(index);
+                                } else if (choice == 'Delete') {
+                                  _deletePhoto(index);
+                                }
+                              },
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                    value: 'Rename', child: Text('Rename')),
+                                PopupMenuItem(
+                                    value: 'Delete', child: Text('Delete')),
+                              ],
+                            ),
                           ),
-                          title: Text(photos[index]["name"]!),
-                          trailing: PopupMenuButton<String>(
-                            onSelected: (String choice) {
-                              if (choice == 'Rename') {
-                                _renamePhoto(index);
-                              } else if (choice == 'Delete') {
-                                _deletePhoto(index);
-                              }
-                            },
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                  value: 'Rename', child: Text('Rename')),
-                              PopupMenuItem(
-                                  value: 'Delete', child: Text('Delete')),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddPhotoOptions,
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue[800],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -231,7 +241,6 @@ class _PhotoPageState extends State<PhotoPage> {
   }
 }
 
-// VideoPage: Displays and manages videos
 class VideoPage extends StatefulWidget {
   @override
   _VideoPageState createState() => _VideoPageState();
@@ -332,60 +341,61 @@ class _VideoPageState extends State<VideoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Video'),
-        backgroundColor: Colors.blue,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        backgroundColor: Colors.blue[800],
       ),
-      body: videos.isEmpty
-          ? Center(child: Text("Tidak ada video"))
-          : Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: videos.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          leading: GestureDetector(
-                            onTap: () => _viewVideo(videos[index]["path"]!),
-                            child: Icon(Icons.videocam, size: 50),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade200, Colors.blue.shade800],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: videos.isEmpty
+            ? Center(child: Text("Tidak ada video"))
+            : Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: videos.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: ListTile(
+                            leading: GestureDetector(
+                              onTap: () => _viewVideo(videos[index]["path"]!),
+                              child: Icon(Icons.videocam, size: 50),
+                            ),
+                            title: Text(videos[index]["name"]!),
+                            trailing: PopupMenuButton<String>(
+                              onSelected: (String choice) {
+                                if (choice == 'Rename') {
+                                  _renameVideo(index);
+                                } else if (choice == 'Delete') {
+                                  _deleteVideo(index);
+                                }
+                              },
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                    value: 'Rename', child: Text('Rename')),
+                                PopupMenuItem(
+                                    value: 'Delete', child: Text('Delete')),
+                              ],
+                            ),
                           ),
-                          title: Text(videos[index]["name"]!),
-                          trailing: PopupMenuButton<String>(
-                            onSelected: (String choice) {
-                              if (choice == 'Rename') {
-                                _renameVideo(index);
-                              } else if (choice == 'Delete') {
-                                _deleteVideo(index);
-                              }
-                            },
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                  value: 'Rename', child: Text('Rename')),
-                              PopupMenuItem(
-                                  value: 'Delete', child: Text('Delete')),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddVideoOptions,
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue[800],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -421,7 +431,6 @@ class _VideoPageState extends State<VideoPage> {
   }
 }
 
-// VideoPlayerScreen: Displays the video player
 class VideoPlayerScreen extends StatefulWidget {
   final String videoPath;
 
@@ -439,8 +448,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.initState();
     _controller = VideoPlayerController.file(File(widget.videoPath))
       ..initialize().then((_) {
-        setState(
-            () {}); // Ensure the first frame is shown after the video is initialized.
+        setState(() {});
       });
   }
 
@@ -453,87 +461,87 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Center(
-            child: _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio < 1.0
-                        ? _controller.value.aspectRatio *
-                            0.7 // For vertical videos
-                        : _controller.value
-                            .aspectRatio, // Original aspect ratio for horizontal
-                    child: VideoPlayer(_controller),
-                  )
-                : CircularProgressIndicator(),
+      appBar: AppBar(
+        title: Text('Player'),
+        backgroundColor: Colors.blue[800],
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade200, Colors.blue.shade800],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          Positioned(
-            top: 40,
-            left: 20,
-            child: IconButton(
-              icon: Icon(Icons.close, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+        ),
+        child: Stack(
+          children: [
+            Center(
+              child: _controller.value.isInitialized
+                  ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
+                  : CircularProgressIndicator(),
             ),
-          ),
-          if (_controller.value.isInitialized)
-            Positioned(
-              bottom: 30,
-              left: 20,
-              right: 20,
-              child: Column(
-                children: [
-                  VideoProgressIndicator(
-                    _controller,
-                    allowScrubbing: true,
-                    colors: VideoProgressColors(
-                      playedColor: Colors.blue,
-                      backgroundColor: Colors.grey,
-                      bufferedColor: Colors.lightBlue,
+            if (_controller.value.isInitialized)
+              Positioned(
+                bottom: 30,
+                left: 20,
+                right: 20,
+                child: Column(
+                  children: [
+                    VideoProgressIndicator(
+                      _controller,
+                      allowScrubbing: true,
+                      colors: VideoProgressColors(
+                        playedColor: Colors.blue,
+                        backgroundColor: Colors.grey,
+                        bufferedColor: Colors.lightBlue,
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.replay_10, color: Colors.blue),
-                        onPressed: () {
-                          _controller.seekTo(
-                            _controller.value.position - Duration(seconds: 10),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          _controller.value.isPlaying
-                              ? Icons.pause
-                              : Icons.play_arrow,
-                          color: Colors.blue,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.replay_10, color: Colors.blue),
+                          onPressed: () {
+                            _controller.seekTo(
+                              _controller.value.position -
+                                  Duration(seconds: 10),
+                            );
+                          },
                         ),
-                        onPressed: () {
-                          setState(() {
+                        IconButton(
+                          icon: Icon(
                             _controller.value.isPlaying
-                                ? _controller.pause()
-                                : _controller.play();
-                          });
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.forward_10, color: Colors.blue),
-                        onPressed: () {
-                          _controller.seekTo(
-                            _controller.value.position + Duration(seconds: 10),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _controller.value.isPlaying
+                                  ? _controller.pause()
+                                  : _controller.play();
+                            });
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.forward_10, color: Colors.blue),
+                          onPressed: () {
+                            _controller.seekTo(
+                              _controller.value.position +
+                                  Duration(seconds: 10),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

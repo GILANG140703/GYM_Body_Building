@@ -86,83 +86,92 @@ class _PodcastViewState extends State<PodcastView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Podcast'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue[800],
       ),
-      body: Column(
-        children: [
-          // Search and Voice Input
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        _searchQuery = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Search...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade200, Colors.blue.shade800],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Column(
+          children: [
+            // Search and Voice Input
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          _searchQuery = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        prefixIcon: const Icon(Icons.search),
                       ),
-                      prefixIcon: const Icon(Icons.search),
                     ),
                   ),
+                  IconButton(
+                    icon: Icon(_isListening ? Icons.mic : Icons.mic_none),
+                    onPressed: _isListening ? _stopListening : _startListening,
+                  ),
+                ],
+              ),
+            ),
+            // Category Tabs
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ChoiceChip(
+                  label: const Text('Suplemen'),
+                  selected: _currentCategory == 'Suplemen',
+                  onSelected: (selected) {
+                    setState(() {
+                      _currentCategory = 'Suplemen';
+                    });
+                  },
                 ),
-                IconButton(
-                  icon: Icon(_isListening ? Icons.mic : Icons.mic_none),
-                  onPressed: _isListening ? _stopListening : _startListening,
+                const SizedBox(width: 10),
+                ChoiceChip(
+                  label: const Text('Gym'),
+                  selected: _currentCategory == 'Gym',
+                  onSelected: (selected) {
+                    setState(() {
+                      _currentCategory = 'Gym';
+                    });
+                  },
                 ),
               ],
             ),
-          ),
-          // Category Tabs
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ChoiceChip(
-                label: const Text('Suplemen'),
-                selected: _currentCategory == 'Suplemen',
-                onSelected: (selected) {
-                  setState(() {
-                    _currentCategory = 'Suplemen';
-                  });
+            // Podcast List
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredPodcasts.length,
+                itemBuilder: (context, index) {
+                  final podcast = filteredPodcasts[index];
+                  return ListTile(
+                    leading: Image.network(
+                      podcast['image'],
+                      width: 50,
+                      fit: BoxFit.cover,
+                    ),
+                    title: Text(podcast['title']),
+                    subtitle: Text(podcast['duration']),
+                    onTap: () => _showPodcastPlayer(context, podcast),
+                  );
                 },
               ),
-              const SizedBox(width: 10),
-              ChoiceChip(
-                label: const Text('Gym'),
-                selected: _currentCategory == 'Gym',
-                onSelected: (selected) {
-                  setState(() {
-                    _currentCategory = 'Gym';
-                  });
-                },
-              ),
-            ],
-          ),
-          // Podcast List
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredPodcasts.length,
-              itemBuilder: (context, index) {
-                final podcast = filteredPodcasts[index];
-                return ListTile(
-                  leading: Image.network(
-                    podcast['image'],
-                    width: 50,
-                    fit: BoxFit.cover,
-                  ),
-                  title: Text(podcast['title']),
-                  subtitle: Text(podcast['duration']),
-                  onTap: () => _showPodcastPlayer(context, podcast),
-                );
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
