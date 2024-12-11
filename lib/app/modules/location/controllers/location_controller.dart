@@ -6,18 +6,18 @@ import 'package:url_launcher/url_launcher.dart';
 
 class LocationController extends GetxController {
   var currentPosition = Rxn<Position>();
-  var locationMessage = "Belum diatur".obs; // Default value
-  var address = "Belum diatur".obs; // Default value
+  var locationMessage = "Belum diatur".obs; 
+  var address = "Belum diatur".obs; 
   var loading = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    resetLocation(); // Set default location on init
+    resetLocation();
   }
 
   Future<void> resetLocation() async {
-    // Reset location to default values
+    
     currentPosition.value = null;
     locationMessage.value = "Belum diatur";
     address.value = "Belum diatur";

@@ -15,7 +15,7 @@ class LocationView extends GetView<LocationController> {
         title: const Text('Lokasi'),
         actions: [
           IconButton(
-            onPressed: controller.resetLocation, // Reset location on refresh
+            onPressed: controller.resetLocation, 
             icon: const Icon(Icons.refresh),
           ),
         ],
