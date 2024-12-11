@@ -23,7 +23,6 @@ void main() async {
 
   // Inisialisasi Firebase jika belum ada instance
   await initializeFirebase();
-
   // Inisialisasi SharedPreferences atau fitur lainnya
   await Get.putAsync(() async => await SharedPreferences.getInstance());
 

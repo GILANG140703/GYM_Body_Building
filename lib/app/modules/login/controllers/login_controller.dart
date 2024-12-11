@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_prak/app/modules/login/views/login_view.dart';
 import 'package:flutter_application_prak/app/modules/navbar/views/navbar_view.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;

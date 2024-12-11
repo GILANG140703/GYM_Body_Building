@@ -46,7 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '252255111361',
     projectId: 'testing-e0433',
     authDomain: 'testing-e0433.firebaseapp.com',
-    storageBucket: 'testing-e0433.appspot.com',
+    storageBucket: 'testing-e0433.firebasestorage.app',
     measurementId: 'G-N3BQREHCP2',
   );
 
@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
     appId: '1:252255111361:android:1eab5819a06fa38d44ac40',
     messagingSenderId: '252255111361',
     projectId: 'testing-e0433',
-    storageBucket: 'testing-e0433.appspot.com',
+    storageBucket: 'testing-e0433.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:252255111361:ios:bb31db5e345437e944ac40',
     messagingSenderId: '252255111361',
     projectId: 'testing-e0433',
-    storageBucket: 'testing-e0433.appspot.com',
+    storageBucket: 'testing-e0433.firebasestorage.app',
     iosBundleId: 'com.example.flutterApplicationPrak',
   );
 
@@ -72,7 +72,7 @@ class DefaultFirebaseOptions {
     appId: '1:252255111361:ios:bb31db5e345437e944ac40',
     messagingSenderId: '252255111361',
     projectId: 'testing-e0433',
-    storageBucket: 'testing-e0433.appspot.com',
+    storageBucket: 'testing-e0433.firebasestorage.app',
     iosBundleId: 'com.example.flutterApplicationPrak',
   );
 
@@ -82,7 +82,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '252255111361',
     projectId: 'testing-e0433',
     authDomain: 'testing-e0433.firebaseapp.com',
-    storageBucket: 'testing-e0433.appspot.com',
+    storageBucket: 'testing-e0433.firebasestorage.app',
     measurementId: 'G-ZCZWXD9QJD',
   );
+
 }

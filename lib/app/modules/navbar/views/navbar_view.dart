@@ -7,7 +7,7 @@ import '../controllers/navbar_controller.dart';
 // import 'navbar_controller.dart';
 
 class NavbarView extends StatelessWidget {
-  const NavbarView({Key? key}) : super(key: key);
+  const NavbarView({super.key});
 
   @override
   Widget build(BuildContext context) {
