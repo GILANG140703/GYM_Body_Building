@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/latihan/bindings/latihan_binding.dart';
 import '../modules/latihan/views/latihan_view.dart';
+import '../modules/location/bindings/location_binding.dart';
+import '../modules/location/views/location_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/meals/views/meals_view.dart';
@@ -61,6 +63,11 @@ class AppPages {
       name: _Paths.PODCAST,
       page: () => PodcastView(),
       binding: PodcastBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOCATION,
+      page: () => LocationView(),
+      binding: LocationBinding(),
     ),
   ];
 }

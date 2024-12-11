@@ -10,6 +10,7 @@ abstract class Routes {
   static const MEALS_DETAIL = _Paths.MEALS_DETAIL;
   static const PROGRESS = _Paths.PROGRESS;
   static const PODCAST = _Paths.PODCAST;
+  static const LOCATION = _Paths.LOCATION;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const MEALS_DETAIL = '/meals-detail';
   static const PROGRESS = '/progress';
   static const PODCAST = '/podcast';
+  static const LOCATION = '/location';
 }

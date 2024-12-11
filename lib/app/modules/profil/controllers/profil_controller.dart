@@ -17,4 +17,8 @@ class ProfilController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
     }
   }
+
+  void goToLocationView() {
+    Get.toNamed('/location');
+  }
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_prak/app/modules/profil/controllers/profil_controller.dart';
 import 'package:image_picker/image_picker.dart';
@@ -326,8 +325,15 @@ class _ProfileViewState extends State<ProfilView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profil'),
-        backgroundColor: Colors.blue[800],
+        backgroundColor: Colors.blue[800], // Warna biru gelap
         actions: [
+          IconButton(
+            icon: Icon(Icons.location_on), // Ikon lokasi
+            onPressed: () async {
+              ProfilController().goToLocationView();
+              Navigator.pushNamed(context, '/location');
+            },
+          ),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () async {
@@ -340,146 +346,165 @@ class _ProfileViewState extends State<ProfilView> {
       body: user == null
           ? Center(child: Text("User not authenticated"))
           : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: _openImagePicker,
-                            child: CircleAvatar(
-                              radius: 50,
-                              backgroundImage: _profileImage != null
-                                  ? FileImage(_profileImage!)
-                                  : const AssetImage(
-                                          'assets/default_profile.png')
-                                      as ImageProvider,
-                              child: _profileImage == null
-                                  ? const Icon(Icons.camera_alt,
-                                      size: 50, color: Colors.white)
-                                  : null,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blue.shade200, Colors.blue.shade800],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: _openImagePicker,
+                              child: CircleAvatar(
+                                radius: 50,
+                                backgroundImage: _profileImage != null
+                                    ? FileImage(_profileImage!)
+                                    : const AssetImage(
+                                            'assets/default_profile.png')
+                                        as ImageProvider,
+                                child: _profileImage == null
+                                    ? const Icon(Icons.camera_alt,
+                                        size: 50, color: Colors.white)
+                                    : null,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          const Text(
-                            'Selamat Datang, Gym',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          if (user?.email != null)
-                            Text(
-                              user!.email!,
+                            const SizedBox(height: 10),
+                            const Text(
+                              'Selamat Datang, Gym',
                               style: TextStyle(
-                                  fontSize: 16, color: Colors.grey[600]),
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
-                          TextButton(
-                            onPressed: _openImagePicker,
-                            child: const Text('Ubah Foto Profil'),
-                          ),
-                          if (_profileImage != null)
+                            if (user?.email != null)
+                              Text(
+                                user!.email!,
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.grey[600]),
+                              ),
                             TextButton(
-                              onPressed: _deleteProfileImage,
-                              child: const Text(
-                                'Hapus Foto Profil',
-                                style: TextStyle(color: Colors.red),
-                              ),
+                              onPressed: _openImagePicker,
+                              child: const Text('Ubah Foto Profil'),
                             ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    ListTile(
-                      title: const Text('Jenis Kelamin'),
-                      subtitle: Text(_gender),
-                      trailing: const Icon(Icons.edit),
-                      onTap: _showGenderSelectionDialog,
-                    ),
-                    ListTile(
-                      title: const Text('Berat Badan Saat Ini'),
-                      subtitle: Text('$_currentWeight kg'),
-                      trailing: const Icon(Icons.edit),
-                      onTap: () => _showInputDialog(
-                          'Berat Badan Saat Ini', _currentWeight.toString(),
-                          (newValue) {
-                        setState(() {
-                          _currentWeight = double.tryParse(newValue) ?? 0.0;
-                        });
-                      }),
-                    ),
-                    ListTile(
-                      title: const Text('Berat Badan Target'),
-                      subtitle: Text('$_targetWeight kg'),
-                      trailing: const Icon(Icons.edit),
-                      onTap: () => _showInputDialog(
-                          'Berat Badan Target', _targetWeight.toString(),
-                          (newValue) {
-                        setState(() {
-                          _targetWeight = double.tryParse(newValue) ?? 0.0;
-                        });
-                      }),
-                    ),
-                    ListTile(
-                      title: const Text('Tinggi Badan'),
-                      subtitle: Text('$_height cm'),
-                      trailing: const Icon(Icons.edit),
-                      onTap: () => _showInputDialog(
-                          'Tinggi Badan', _height.toString(), (newValue) {
-                        setState(() {
-                          _height = double.tryParse(newValue) ?? 0.0;
-                        });
-                      }),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'To-Do List',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _toDoList.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(_toDoList[index]['text']),
-                          leading: Checkbox(
-                            value: _toDoList[index]['completed'],
-                            onChanged: (value) {
-                              _toggleToDoCompletion(index, value);
-                            },
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () {
-                                  _editToDoAt(index);
-                                },
+                            if (_profileImage != null)
+                              TextButton(
+                                onPressed: _deleteProfileImage,
+                                child: const Text(
+                                  'Hapus Foto Profil',
+                                  style: TextStyle(color: Colors.red),
+                                ),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  _deleteToDoAt(index);
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: _addToDo,
-                        child: const Text('Tambah To-Do'),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Card(
+                        color: Colors.white, // Warna putih pada card info dasar
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: const Text('Jenis Kelamin'),
+                              subtitle: Text(_gender),
+                              trailing: const Icon(Icons.edit),
+                              onTap: _showGenderSelectionDialog,
+                            ),
+                            ListTile(
+                              title: const Text('Berat Badan Saat Ini'),
+                              subtitle: Text('$_currentWeight kg'),
+                              trailing: const Icon(Icons.edit),
+                              onTap: () => _showInputDialog(
+                                  'Berat Badan Saat Ini',
+                                  _currentWeight.toString(), (newValue) {
+                                setState(() {
+                                  _currentWeight =
+                                      double.tryParse(newValue) ?? 0.0;
+                                });
+                              }),
+                            ),
+                            ListTile(
+                              title: const Text('Berat Badan Target'),
+                              subtitle: Text('$_targetWeight kg'),
+                              trailing: const Icon(Icons.edit),
+                              onTap: () => _showInputDialog(
+                                  'Berat Badan Target',
+                                  _targetWeight.toString(), (newValue) {
+                                setState(() {
+                                  _targetWeight =
+                                      double.tryParse(newValue) ?? 0.0;
+                                });
+                              }),
+                            ),
+                            ListTile(
+                              title: const Text('Tinggi Badan'),
+                              subtitle: Text('$_height cm'),
+                              trailing: const Icon(Icons.edit),
+                              onTap: () => _showInputDialog(
+                                  'Tinggi Badan', _height.toString(),
+                                  (newValue) {
+                                setState(() {
+                                  _height = double.tryParse(newValue) ?? 0.0;
+                                });
+                              }),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'To-Do List',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _toDoList.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(_toDoList[index]['text']),
+                            leading: Checkbox(
+                              value: _toDoList[index]['completed'],
+                              onChanged: (value) {
+                                _toggleToDoCompletion(index, value);
+                              },
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.edit),
+                                  onPressed: () {
+                                    _editToDoAt(index);
+                                  },
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    _deleteToDoAt(index);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: _addToDo,
+                          child: const Text('Tambah To-Do'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
