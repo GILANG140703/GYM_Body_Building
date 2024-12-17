@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/connection/bindings/connection_binding.dart';
+import '../modules/connection/views/connection_view.dart';
 import '../modules/latihan/bindings/latihan_binding.dart';
 import '../modules/latihan/views/latihan_view.dart';
 import '../modules/location/bindings/location_binding.dart';
@@ -68,6 +70,11 @@ class AppPages {
       name: _Paths.LOCATION,
       page: () => LocationView(),
       binding: LocationBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONNECTION,
+      page: () => NoConnectionView(),
+      binding: ConnectionBinding(),
     ),
   ];
 }

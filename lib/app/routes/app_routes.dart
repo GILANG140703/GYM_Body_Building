@@ -11,6 +11,7 @@ abstract class Routes {
   static const PROGRESS = _Paths.PROGRESS;
   static const PODCAST = _Paths.PODCAST;
   static const LOCATION = _Paths.LOCATION;
+  static const CONNECTION = _Paths.CONNECTION;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const PROGRESS = '/progress';
   static const PODCAST = '/podcast';
   static const LOCATION = '/location';
+  static const CONNECTION = '/connection';
 }
