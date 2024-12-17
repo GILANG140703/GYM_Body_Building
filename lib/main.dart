@@ -38,7 +38,7 @@ void main() async {
   await notificationHandler.initPushNotification();
 
   // Panggil Dependency Injection untuk mengatur bindings
-  DependencyInjection.init();
+  // DependencyInjection.init();
 
   // Jalankan aplikasi Flutter menggunakan GetMaterialApp
   runApp(GetMaterialApp(
@@ -47,4 +47,5 @@ void main() async {
     initialRoute: AppPages.INITIAL, // Rute awal aplikasi
     getPages: AppPages.routes, // Rute halaman yang tersedia
   ));
+  DependencyInjection.init();
 }
