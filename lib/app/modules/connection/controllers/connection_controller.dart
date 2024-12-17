@@ -1,50 +1,67 @@
+import '../../../routes/app_pages.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_prak/app/modules/navbar/views/navbar_view.dart';
-import '../views/connection_view.dart';
 
 class ConnectionController extends GetxController {
   final Connectivity _connectivity = Connectivity();
-  String _lastRoute = '/'; // Variabel untuk menyimpan rute terakhir
+  String? _lastRoute; // Variable to store the last route
 
   @override
   void onInit() {
     super.onInit();
-    // Menyimpan rute awal
+    // Save the first route when the app starts
     _lastRoute = Get.currentRoute;
 
-    // Memantau perubahan koneksi
-    _connectivity.onConnectivityChanged.listen((connectivityResults) {
-      _updateConnectionStatus(connectivityResults.first);
+    _connectivity.onConnectivityChanged.listen((connectivityResult) {
+      _updateConnectionStatus(connectivityResult.first);
     });
-
-    // Mengecek koneksi awal saat aplikasi dimulai
-    checkConnection();
   }
 
-  // Fungsi untuk mengecek koneksi awal
-  void checkConnection() async {
-    var result = await _connectivity.checkConnectivity();
-    _updateConnectionStatus(result.first);
-  }
-
-  // Fungsi untuk mengupdate status koneksi
   void _updateConnectionStatus(ConnectivityResult connectivityResult) {
+    print('Connectivity Result: $connectivityResult');
+    print('Last Route: $_lastRoute');
+
     if (connectivityResult == ConnectivityResult.none) {
-      // Simpan rute terakhir sebelum berpindah ke NoConnectionView
-      _lastRoute = Get.currentRoute;
-      Get.offAll(() => const NoConnectionView());
-    } else {
-      // Jika koneksi kembali normal, kembali ke rute terakhir
-      if (Get.currentRoute == '/NoConnectionView') {
-        if (_lastRoute == '/NoConnectionView' || _lastRoute == '/') {
-          // Jika rute terakhir adalah halaman awal, arahkan ke NavbarView
-          Get.offAll(() => const NavbarView());
-        } else {
-          // Jika rute terakhir bukan halaman awal, kembali ke halaman terakhir
-          Get.offAllNamed(_lastRoute);
-        }
+      // Display snackbar when offline
+      Get.snackbar(
+        'No Connection',
+        'You are offline. Please check your internet connection.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.withOpacity(0.8),
+        colorText: Colors.white,
+        duration: Duration(seconds: 3),
+      );
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      // Display snackbar when connected to Wi-Fi
+      Get.snackbar(
+        'Connected to Wi-Fi',
+        'You are now connected to Wi-Fi.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green.withOpacity(0.8),
+        colorText: Colors.white,
+        duration: Duration(seconds: 3),
+      );
+    } else if (connectivityResult == ConnectivityResult.mobile) {
+      // Display snackbar when connected to mobile data
+      Get.snackbar(
+        'Connected to Mobile Data',
+        'You are now connected to mobile data.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.blue.withOpacity(0.8),
+        colorText: Colors.white,
+        duration: Duration(seconds: 3),
+      );
+    }
+
+    // Handle route redirection
+    if (connectivityResult != ConnectivityResult.none) {
+      if (_lastRoute != null) {
+        print('Navigating back to $_lastRoute');
+        Get.offAllNamed(_lastRoute!);
+      } else {
+        print('Navigating to LoginView');
+        Get.offAllNamed(Routes.LOGIN);
       }
     }
   }

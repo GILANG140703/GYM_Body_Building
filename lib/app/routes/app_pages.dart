@@ -71,10 +71,10 @@ class AppPages {
       page: () => LocationView(),
       binding: LocationBinding(),
     ),
-    GetPage(
-      name: _Paths.CONNECTION,
-      page: () => NoConnectionView(),
-      binding: ConnectionBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.CONNECTION,
+    //   page: () => ConnectionView(),
+    //   binding: ConnectionBinding(),
+    // ),
   ];
 }
