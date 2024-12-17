@@ -7,7 +7,7 @@ import '../../../data/services/meals_controller.dart'; // Adjust the path as nec
 class MealsView extends StatelessWidget {
   final MealsController mealsController = Get.put(MealsController());
 
-  const MealsView({super.key});
+  MealsView({super.key});
 
   @override
   Widget build(BuildContext context) {
