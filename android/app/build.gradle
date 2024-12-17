@@ -31,7 +31,6 @@ android {
         applicationId = "com.example.flutter_application_prak"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -64,4 +63,5 @@ dependencies {
 
     // Kotlin standard library
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31'
+    
 }

@@ -5,9 +5,9 @@ class MealDetailWebView extends StatelessWidget {
   final String url;
 
   const MealDetailWebView({
-    Key? key,
+    super.key,
     required this.url,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
