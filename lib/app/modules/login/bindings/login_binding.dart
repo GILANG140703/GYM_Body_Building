@@ -1,4 +1,4 @@
-import 'package:flutter_application_prak/app/modules/login/controllers/login_controller.dart';
+import 'package:BodyBuilding/app/modules/login/controllers/login_controller.dart';
 import 'package:get/get.dart';
 
 // import '../controllers/home_controller.dart';

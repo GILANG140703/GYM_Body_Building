@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_prak/app/modules/navbar/views/navbar_view.dart';
-import 'package:flutter_application_prak/app/modules/login/controllers/login_controller.dart';
+import 'package:BodyBuilding/app/modules/navbar/views/navbar_view.dart';
+import 'package:BodyBuilding/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:get/get.dart';
 

@@ -4,6 +4,7 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   // static const HOME = _Paths.HOME;
+  static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
   static const LOGIN = _Paths.LOGIN;
   static const LATIHAN = _Paths.LATIHAN;
   static const PROFIL = _Paths.PROFIL;
@@ -12,11 +13,13 @@ abstract class Routes {
   static const PODCAST = _Paths.PODCAST;
   static const LOCATION = _Paths.LOCATION;
   static const CONNECTION = _Paths.CONNECTION;
+
 }
 
 abstract class _Paths {
   _Paths._();
   // static const HOME = '/home';
+  static const SPLASH_SCREEN = '/splash-screen';
   static const LOGIN = '/login';
   static const LATIHAN = '/latihan';
   static const PROFIL = '/profil';
@@ -25,4 +28,6 @@ abstract class _Paths {
   static const PODCAST = '/podcast';
   static const LOCATION = '/location';
   static const CONNECTION = '/connection';
+
+
 }

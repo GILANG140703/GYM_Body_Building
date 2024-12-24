@@ -15,6 +15,8 @@ import '../modules/profil/bindings/profil_binding.dart';
 import '../modules/profil/views/profil_view.dart';
 import '../modules/progress/bindings/progress_binding.dart';
 import '../modules/progress/views/progress_view.dart';
+import '../modules/splash_screen/bindings/splash_screen_binding.dart';
+import '../modules/splash_screen/views/splash_screen_view.dart';
 
 // import '../modules/home/bindings/home_binding.dart';
 // import '../modules/home/views/home_view.dart';
@@ -25,7 +27,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.SPLASH_SCREEN;
 
   static final routes = [
     GetPage(
@@ -76,5 +78,10 @@ class AppPages {
     //   page: () => ConnectionView(),
     //   binding: ConnectionBinding(),
     // ),
+    GetPage(
+      name: _Paths.SPLASH_SCREEN,
+      page: () => SplashScreenView(),
+      binding: SplashScreenBinding(),
+    ),
   ];
 }

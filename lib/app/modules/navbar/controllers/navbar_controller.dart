@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_prak/app/modules/podcast/views/podcast_view.dart';
-import 'package:flutter_application_prak/app/modules/progress/views/progress_view.dart';
+import 'package:BodyBuilding/app/modules/podcast/views/podcast_view.dart';
+import 'package:BodyBuilding/app/modules/progress/views/progress_view.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 

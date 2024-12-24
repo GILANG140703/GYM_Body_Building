@@ -2,8 +2,12 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_application_prak/app/modules/profil/controllers/profil_controller.dart';
 import 'package:flutter_application_prak/app/modules/connection/controllers/connection_controller.dart';
+
+import 'package:BodyBuilding/app/modules/profil/controllers/profil_controller.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 class ProfilView extends StatefulWidget {

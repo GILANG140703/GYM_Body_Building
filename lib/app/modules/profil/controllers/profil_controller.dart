@@ -25,28 +25,20 @@ class ProfilController extends GetxController {
     _syncLocalData();
   }
 
-  // Add a To-Do item
   void addToDo(String task) async {
     toDoList.add(task);
-    // Save to local storage
     await _saveToDoListLocally();
-    // Check if the device is online
     bool isOnline = await _checkInternetConnection();
     if (isOnline) {
-      // Sync with Firebase if online
       await _syncToDoListWithFirebase();
     }
   }
 
-  // Delete a To-Do item
   void deleteToDoAt(int index) async {
     toDoList.removeAt(index);
-    // Save updated list to local storage
     await _saveToDoListLocally();
-    // Check if the device is online
     bool isOnline = await _checkInternetConnection();
     if (isOnline) {
-      // Sync with Firebase if online
       await _syncToDoListWithFirebase();
     }
   }
@@ -62,12 +54,10 @@ class ProfilController extends GetxController {
     }
   }
 
-  // Navigate to location view
   void goToLocationView() {
     Get.toNamed('/location');
   }
 
-  // Load To-Do list from SharedPreferences
   Future<void> _loadToDoList() async {
     final prefs = await SharedPreferences.getInstance();
     List<String>? savedToDoList = prefs.getStringList('toDoList');
@@ -76,13 +66,11 @@ class ProfilController extends GetxController {
     }
   }
 
-  // Save To-Do list to SharedPreferences
   Future<void> _saveToDoListLocally() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList('toDoList', toDoList);
   }
 
-  // Sync To-Do list with Firebase
   Future<void> _syncToDoListWithFirebase() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -97,7 +85,6 @@ class ProfilController extends GetxController {
               .get();
 
           if (existingTask.docs.isEmpty) {
-            // Add new task if not found
             await firestore.collection('To-Do List').add({
               'task': task,
               'userEmail': user.email,
@@ -114,6 +101,7 @@ class ProfilController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
     }
   }
+
 
   // Handle connectivity change
   void _handleConnectivityChange(ConnectivityResult result) {
@@ -133,6 +121,7 @@ class ProfilController extends GetxController {
   }
 
   // Check if the device is online
+
   Future<bool> _checkInternetConnection() async {
     try {
       final result = await InternetAddress.lookup('google.com');
