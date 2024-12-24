@@ -1,8 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_prak/app/modules/login/views/login_view.dart';
-import 'package:flutter_application_prak/app/modules/navbar/views/navbar_view.dart';
+import 'package:BodyBuilding/app/modules/login/views/login_view.dart';
+import 'package:BodyBuilding/app/modules/navbar/views/navbar_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 

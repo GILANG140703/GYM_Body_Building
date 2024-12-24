@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_prak/app/modules/meals/views/meals_web_view.dart';
+import 'package:BodyBuilding/app/modules/meals/views/meals_web_view.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../../data/services/meals_controller.dart'; // Adjust the path as necessary
