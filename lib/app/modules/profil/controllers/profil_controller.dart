@@ -1,17 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ProfilController extends GetxController {
   var toDoList = <String>[].obs;
+  final RxBool isConnected = true.obs;
 
   @override
   void onInit() {
     super.onInit();
     _loadToDoList();
+
+    // Listen for connectivity changes
+    Connectivity().onConnectivityChanged.listen((results) {
+      final result = results.first;
+      _handleConnectivityChange(result); // Handle the connectivity change
+    });
+
+    // Sync local data (if any)
+    _syncLocalData();
   }
 
   // Add a To-Do item
@@ -104,6 +115,23 @@ class ProfilController extends GetxController {
     }
   }
 
+  // Handle connectivity change
+  void _handleConnectivityChange(ConnectivityResult result) {
+    isConnected.value = result != ConnectivityResult.none;
+    if (isConnected.value) {
+      Get.snackbar('Online', 'You are now online. Syncing data...',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
+      _syncToDoListWithFirebase();
+    } else {
+      Get.snackbar('Offline', 'You are offline. Data saved locally.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    }
+  }
+
   // Check if the device is online
   Future<bool> _checkInternetConnection() async {
     try {
@@ -111,6 +139,14 @@ class ProfilController extends GetxController {
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } on SocketException catch (_) {
       return false;
+    }
+  }
+
+  // Sync local data if there is any
+  Future<void> _syncLocalData() async {
+    bool isOnline = await _checkInternetConnection();
+    if (isOnline) {
+      await _syncToDoListWithFirebase();
     }
   }
 }
