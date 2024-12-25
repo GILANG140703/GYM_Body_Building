@@ -1,4 +1,4 @@
-import 'package:flutter_application_prak/app/modules/profil/bindings/profil_binding.dart';
+import 'package:BodyBuilding/app/modules/profil/bindings/profil_binding.dart';
 
 import 'app/modules/connection/bindings/connection_binding.dart';
 
