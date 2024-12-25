@@ -21,14 +21,14 @@ class _PodcastViewState extends State<PodcastView> {
       'title': 'Suplemen Protein: Pilih Whey, Casein, atau Plant-Based?',
       'duration': '25:00',
       'url': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-      'image': 'https://via.placeholder.com/150',
+      'image': 'assets/suplemen_protein.png', // Path ke gambar assets
     },
     {
       'category': 'Suplemen',
       'title': 'Membangun Otot Lebih Cepat: Peran Kreatin dalam Latihanmu',
       'duration': '10:00',
       'url': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-      'image': 'https://via.placeholder.com/150',
+      'image': 'assets/membangun_otot.png', // Path ke gambar assets
     },
     {
       'category': 'Gym',
@@ -36,14 +36,14 @@ class _PodcastViewState extends State<PodcastView> {
           'Pump It Up! Cara Mendapatkan Biceps Lebih Berisi dengan Superset',
       'duration': '25:00',
       'url': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-      'image': 'https://via.placeholder.com/150',
+      'image': 'assets/pump_biceps.png', // Path ke gambar assets
     },
     {
       'category': 'Gym',
       'title': 'Kesalahan Umum dalam Melatih Triceps dan Cara Memperbaikinya',
       'duration': '10:00',
       'url': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-      'image': 'https://via.placeholder.com/150',
+      'image': 'assets/kesalahan_triceps.png', // Path ke gambar assets
     },
   ];
 
@@ -158,8 +158,9 @@ class _PodcastViewState extends State<PodcastView> {
                 itemBuilder: (context, index) {
                   final podcast = filteredPodcasts[index];
                   return ListTile(
-                    leading: Image.network(
-                      podcast['image'],
+                    leading: Image.asset(
+                      podcast[
+                          'image'], // Menggunakan Image.asset untuk gambar dari assets
                       width: 50,
                       fit: BoxFit.cover,
                     ),
@@ -243,7 +244,8 @@ class _PodcastPlayerState extends State<PodcastPlayer> {
               style:
                   const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
-          Image.network(widget.podcast['image'], height: 150),
+          Image.asset(widget.podcast['image'],
+              height: 150), // Gambar dari assets
           const SizedBox(height: 20),
           Slider(
             value: _position.inSeconds.toDouble(),

@@ -95,6 +95,11 @@ flutter:
     - assets/Sign.png
     - assets/default_profile.png
     - assets/Nosifer-Regular.ttf
+    - assets/pump_biceps.png
+    - assets/kantor.png
+    - assets/kesalahan_triceps.png
+    - assets/membangun_otot.png
+    - assets/suplemen_protein.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

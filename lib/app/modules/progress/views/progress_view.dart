@@ -22,23 +22,40 @@ class ProgressView extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton.icon(
-                icon: Icon(Icons.photo),
-                label: Text('Foto'),
-                onPressed: () {
-                  Get.to(() => PhotoPage());
-                },
+              // Add a Text widget above the buttons
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  'Silakan upload progress Anda',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-              SizedBox(width: 20),
-              ElevatedButton.icon(
-                icon: Icon(Icons.videocam),
-                label: Text('Video'),
-                onPressed: () {
-                  Get.to(() => VideoPage());
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    icon: Icon(Icons.photo),
+                    label: Text('Foto'),
+                    onPressed: () {
+                      Get.to(() => PhotoPage());
+                    },
+                  ),
+                  SizedBox(width: 20),
+                  ElevatedButton.icon(
+                    icon: Icon(Icons.videocam),
+                    label: Text('Video'),
+                    onPressed: () {
+                      Get.to(() => VideoPage());
+                    },
+                  ),
+                ],
               ),
             ],
           ),

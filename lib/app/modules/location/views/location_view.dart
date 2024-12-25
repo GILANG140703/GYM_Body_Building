@@ -15,7 +15,7 @@ class LocationView extends GetView<LocationController> {
         title: const Text('Lokasi'),
         actions: [
           IconButton(
-            onPressed: controller.resetLocation, 
+            onPressed: controller.resetLocation,
             icon: const Icon(Icons.refresh),
           ),
         ],
@@ -106,6 +106,21 @@ class LocationView extends GetView<LocationController> {
                   ],
                 ),
               ),
+            ),
+            Column(
+              children: [
+                Image.asset(
+                  'assets/kantor.png', // Path ke gambar lokal
+                  height: 150,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Kunjungi Kantor Pusat Kami',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
           ],
         ),
